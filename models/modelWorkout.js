@@ -33,7 +33,7 @@ const WorkoutSchema = new Schema({
             reps: {
                 type: Number,
                 trim: true,
-                required: "String is Required"
+                required: "Number is Required"
             },
             sets: {
                 type: Number,
