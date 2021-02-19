@@ -45,6 +45,11 @@ app.post("/api/workouts", function (req, res){
     res.json(data)
   })
 });
+app.get("/api/workouts/range", function (req, res){
+  db.Workout.find({}).then(function (data){
+    res.json(data)
+  })
+});
 
 
 
