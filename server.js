@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const mongojs = require("mongojs");
 const path = require("path");
 const PORT = process.env.PORT || 3000;
 const db = require("./models");
@@ -33,18 +34,40 @@ app.get("/", function(req, res) {
 
 // set up for the individual calls 
 
-// Get route to get the last workout
+// call to find all the workouts and pull the last one
 app.get("/api/workouts", function (req, res){
   db.Workout.find({}).then(function (data){
     res.json(data)
   })
 });
-
+// call to create the database in mongoose
 app.post("/api/workouts", function (req, res){
   db.Workout.create({}).then(function (data){
+    console.log(data)
+    res.json(data)
+  })
+  .catch(function (error){
+    res.json(error)
+  })
+});
+// call for the new workouts
+app.put("/api/workouts/:id", function (req, res){
+  console.log(req.body);
+  console.log(req.params.id);
+  db.Workout.updateOne(
+    {
+      _id: mongojs.ObjectId(req.params.id)
+    },
+    { 
+    $set: {
+      exercises: req.body
+    } 
+  }).then(function (data){
     res.json(data)
   })
 });
+
+// call for the workout chart
 app.get("/api/workouts/range", function (req, res){
   db.Workout.find({}).then(function (data){
     res.json(data)
