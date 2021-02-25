@@ -37,9 +37,25 @@ app.get("/", function(req, res) {
 // call to find all the workouts and pull the last one
 app.get("/api/workouts", function (req, res){
   db.Workout.find({}).then(function (data){
+    console.log("workout", data)
     res.json(data)
   })
 });
+
+app.get("/api/workouts", (req, res)=>{
+  console.log(req.body)
+  db.Workout.aggregate([{
+    $addFields: {
+      totalDuration: {
+        $sum: "$exercises.duration"
+      }
+    }
+  }]).then(function (data) {
+  
+    res.json(data)
+  })
+});
+
 // call to create the database in mongoose
 app.post("/api/workouts", function (req, res){
   db.Workout.create({}).then(function (data){
@@ -59,7 +75,7 @@ app.put("/api/workouts/:id", function (req, res){
       _id: mongojs.ObjectId(req.params.id)
     },
     { 
-    $set: {
+    $push: {
       exercises: req.body
     } 
   }).then(function (data){
