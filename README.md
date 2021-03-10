@@ -1,5 +1,5 @@
 # FitnessTracker
-# Ferdinad Aguwa - BudgetTracker
+# Ferdinad Aguwa 
 ## Description
 The primary goal of this application is to keep you in shape. Tracking ones fitness is extremly important, and can motivate a person to keep going. Use the workout tracker and see how much you have accomplished. Good luck.
 
