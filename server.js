@@ -14,6 +14,7 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
+  useCreateIndex: true,
   useFindAndModify: false
 });
 
@@ -85,7 +86,9 @@ app.put("/api/workouts/:id", function (req, res){
 
 // call for the workout chart
 app.get("/api/workouts/range", function (req, res){
-  db.Workout.find({}).then(function (data){
+  db.Workout.find({}).sort({_id: -1})
+  .limit(7)
+  .then(function (data){
     res.json(data)
   })
 });
